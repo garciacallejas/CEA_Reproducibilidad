@@ -1,0 +1,222 @@
+---
+title: "Opciones de Rmarkdown"
+author: "David García Callejas"
+output:
+  pdf_document: 
+    fig_caption: true
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, results = TRUE, 
+                      warning = FALSE, message = FALSE)
+library(tidyverse)
+```
+
+### Elementos de un archivo Rmd
+
+* Bloques de código (chunks)
+
+    + mostrar/ocultar código fuente: `echo`
+    + mostrar/ocultar output: `results`
+    + mostrar/ocultar warnings: `warning`
+    + mostrar/ocultar mensajes: `message`
+    + ocultar figuras: `fig.show="hide"`
+    + mostrar/ocultar todo lo anterior (pero ejecutando el bloque): `include`
+    + unir outputs en un sólo bloque: `collapse`
+    + evaluar el código del bloque: `eval`
+    + opciones globales: `knitr::opts_chunk\$set(...)\`
+
+* Formato de texto
+
+  + Secciones:
+  
+    - no numeradas: `#` antes del nombre de la sección
+    
+    # Título principal con una almohadilla
+    ## Dos almohadillas
+    ### Tres
+    #### Cuatro
+  
+    - numeradas: 
+    
+    Incluyendo `number_sections` en el encabezado:
+    
+    ```
+    output:
+      html_document:
+        number_sections: true
+      pdf_document:
+        number_sections: true
+    ```
+    
+    Se puede añadir una sección no numerada dentro de un documento con secciones numeradas:
+    
+    ```
+    # Sección sin numerar {-}
+    ```
+    
+  + Cursiva: 
+  
+    `*texto en cursiva*`, o `_texto en cursiva_`
+    
+  + resaltado: 
+  
+    `**texto resaltado**`, o `__texto resaltado__`
+    
+  + Subrayado: 
+  
+    No existe por defecto en markdown; se puede hacer indirectamente $\text{\underline{usando \LaTeX}}$:
+  
+    ```
+    $\text{\underline{Texto subrayado usando sintaxis \LaTeX}}$
+    ```
+  + Color de la fuente: 
+    
+    Podemos usar sintaxis \LaTeX:
+    
+    ```
+    $\color{red}{\text{texto en rojo}}$
+    ```
+    
+    $\color{red}{\text{texto en rojo}}$
+    
+    Si generamos output en html, también podemos usar sintaxis html:
+    
+    ```
+    <span style="color: red;">texto en rojo para html</span>
+    ```
+  + Tipo de fuente: 
+  
+    Esta opción no se puede incluir directamente en el archivo `.Rmd`. Necesitamos crear un archivo auxiliar que nos indique el "estilo" que usará el traductor \LaTeX{} para generar el documento final. En la misma carpeta donde tenemos el archivo `.Rmd`, creamos un archivo con extensión `.sty`. Si queremos usar la fuente "Biolinum sans serif", éste sería el contenido de nuestro archivo `mi_estilo.sty`:
+  
+    ```
+    \usepackage{biolinum}
+    \renewcommand{\familydefault}{\sfdefault} % sans serif
+    \fontfamily{ppl}\selectfont
+    ```
+    Fijáos que, además de seleccionar el nombre de la fuente (biolinum), indica que debe usar la fuente sans serif por defecto, (la línea "renewcommand"). Si escogéis una fuente serif, esta línea no es necesaria. El catálogo de fuentes disponibles en \LaTeX{} se puede consultar en [https://tug.org/FontCatalogue/](https://tug.org/FontCatalogue/).
+  
+    Para que estos cambios tengan efecto en un archivo `.Rmd`, tenemos que referenciar el estilo en el encabezado:
+  
+    ```
+    ---
+    output: 
+    pdf_document:
+        includes:
+            in_header: mi_estilo.sty 
+    ---
+    ```
+  + Enlaces web: 
+  
+    ```
+    [texto en el documento](dirección web)
+    ```
+  
+  + Listas numeradas:
+  
+    ```
+    1. Primer elemento
+    2. Segundo elemento
+       1. sub-elemento
+       
+          texto en sub-elemento 1
+       2. sub-elemento 2
+    ```
+
+    Es importante el punto al final de cada número, empezar cada sublista a la altura del primer carácter del nivel superior, y dejar una línea en blanco entre el encabezado del nivel y el texto.
+    
+  + Listas no numeradas:
+  
+    ```
+    * Primer elemento
+    * Segundo elemento
+      + sub-elemento
+        - sub-sub
+      + sub-elemento 2
+    ```
+    
+  + Párrafos/saltos de línea:
+   
+    Para empezar un nuevo párrafo, añade dos espacios al final del anterior o una línea de separación:
+    
+    Una frase que debería ser final de párrafo. 
+    ¿Otro párrafo?
+  
+    Una frase que debaría ser final de párrafo.  
+    Al añadir dos espacios en la frase anterior (o una línea entre ambas), funciona.
+
+  + Saltos de página:
+  
+    ```
+    \newpage
+    ```
+    
+* Figuras dinámicas y externas
+
+  Rmarkdown permite incluir en el documento generado tanto imágenes dinámicas, generadas dentro de R, como externas. Para el primer caso, basta con generar la figura dentro de un bloque de código de R.
+  
+  ```{r}
+  ggplot(cars, aes(speed, dist)) + geom_point()
+  ```
+  Se puede ajustar el tamaño y la resolución de las imágenes generadas, a través de las opciones `fig.width` y `fig.height`, que tienen unidades de pulgadas. Por ejemplo, la imagen a continuación se genera con los parámetros `{r fig.width = 2,fig.height = 2}`:
+  
+  ```{r fig.width = 2, fig.height = 2,echo = FALSE}
+  ggplot(cars, aes(speed, dist)) + geom_point()
+  ```
+  
+  Una alternativa más intuitiva puede ser usar las opciones `out.width` y `out.height`, que aceptan valores de porcentaje con respecto al marco donde se encaja la imagen:
+  
+  ````
+  ```{r out.width = "50%"}`r ''`
+  ggplot(cars, aes(speed, dist)) + geom_point()
+  ```
+  ````
+  
+  ```{r out.width = "50%",echo = FALSE}
+  ggplot(cars, aes(speed, dist)) + geom_point()
+  ```
+  
+  \newpage
+  
+  Hay dos maneras de incluir imágenes externas. La primera, muy sencilla, tiene la sintaxis `![texto pie de imagen](ruta_imagen)`. Por ejemplo, la figura a continuación se genera con la orden `![Lince ibérico](../data/figuras/Lynx_pardinus.jpg)`. La ruta a la imagen se entiende *relativa* a la localización del archivo `.Rmd`.
+  
+  ![Lince ibérico](../data/figuras/Lynx_pardinus.jpg)
+  
+  Esta sintaxis no permite mucha flexibilidad. Para modificar el tamaño u otros aspectos de la imagen, es más apropiado importar imágenes dentro de bloques de código, con la función `include_graphics`. En la definición del bloque podemos definir opciones como el alineado (`fig.align`), o el tamaño, como vimos arriba (`out.width` y `out.height`). También podemos especificar el pie de figura con la opción `fig.cap`. Para ello, nos aseguraremos de que en el encabezado del documento tengamos la siguiente opción:
+  
+  ```
+    pdf_document: 
+      fig_caption: true
+  ```
+  El código y la figura con las opciones elegidas:
+  
+  ````
+  ```{r lince, fig.align = 'center', out.width = "50%", fig.cap='Lince ibérico, segunda versión'}`r ''`
+    knitr::include_graphics(here::here("data/figuras", "Lynx_pardinus.jpg"))
+  ```
+  ````
+  
+  ```{r lince, fig.align = 'center', out.width = "50%", fig.cap='Lince ibérico, segunda versión', echo=FALSE}
+    knitr::include_graphics(here::here("data/figuras", "Lynx_pardinus.jpg"))
+  ```
+  \newpage
+  
+* tablas
+
+```{r echo=FALSE,results='asis'}
+knitr::kable(mtcars[1:5,])
+```
+  
+* referencias
+* expresiones matemáticas
+* formato de página, encabezado/pie de página
+  + índice
+  + números de línea
+
+### Aplicaciones avanzadas
+
+-   webs con blogdown
+
+-   libros

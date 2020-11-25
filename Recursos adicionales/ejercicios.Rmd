@@ -1,0 +1,51 @@
+---
+title: "Ejercicios Rmarkdown"
+author: "David García Callejas"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, results = FALSE, warning = FALSE, message = FALSE)
+```
+
+### Documentos básicos
+
+**1** Crea un documento en Rmarkdown con salida en pdf, y guarda el archivo generado.
+
+### Git
+
+**2** 
+
+a) Crea tu propia cuenta de GitHub.
+
+b) Crea un repositorio nuevo, y hazlo público.
+
+c) Crea un proyecto en Rstudio asociado a ese repositorio.
+
+d) En Rstudio, crea un nuevo documento Rmd dentro de ese proyecto.
+
+e) Sube los cambios que has hecho en tu ordenador a tu cuenta de GitHub.
+
+**3** Clona el repositorio https://github.com/Pakillo/COVID19-Andalucia.git y genera en tu ordenador el informe asociado.
+
+### Rmarkdown
+
+**4** 
+
+a) Dentro del proyecto que creaste en el ejercicio 2, genera un archivo Rmd que:
+
+a.1) Haga una regresión lineal entre la profundidad y la magnitud de los terremotos listados en el arhivo "data/Earthquakes_data.csv".
+
+a.2) Genere un pdf en el que aparezca una figura con los puntos y la recta de regresión.
+
+b) Genera el documento pdf asociado al archivo Rmd.
+
+c) Sube los resultados al repositorio de GitHub.
+
+
+
+
+
+

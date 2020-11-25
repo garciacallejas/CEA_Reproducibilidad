@@ -1,0 +1,71 @@
+---
+title: "Introducción a Rmarkdown"
+author: "David García Callejas"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, results = FALSE, 
+                      warning = FALSE, message = FALSE)
+```
+
+## ¿Qué es Rmarkdown?
+
+Rmarkdown es un formato de archivo que permite generar informes reproducibles y actualizables, combinando texto y código en R. Rmarkdown utiliza en su mayoría la sintaxis del lenguaje markdown. Este lenguaje permite editar texto de manera sencilla, intuitiva, y por otro lado, tiene una funcionalidad relativamente limitada.
+
+Para generar documentos con Rmarkdown, es necesario instalar R y el paquete `Rmarkdown`.
+
+```{r eval=FALSE}
+install.packages("Rmarkdown")
+```
+
+Además, es altamente recomendable trabajar desde Rstudio, porque este entorno integra una serie de elementos que nos harán la vida mucho más fácil. Rmarkdown permite generar documentos en formato html, pdf, o word. Para generar documentos en pdf, es necesario además instalar `LaTex`, otro lenguaje de edición de texto que también es usado internamente por el "traductor" de Rmarkdown. 
+
+Podemos instalar `LaTex` desde R a través de un paquete intermedio, `tinytex`:
+
+```{r eval=FALSE}
+install.packages('tinytex')
+tinytex::install_tinytex()
+```
+
+Con estas órdenes, deberíamos ya tener todo lo necesario para compilar documentos en pdf.
+
+En Rstudio, podemos ver la estructura de un archivo Rmd a través de la plantilla que nos ofrece al crear un documento nuevo (File -> New File -> R markdown). En la ventana que aparece, podemos especificar una serie de opciones básicas, como el autor del documento, o el formato de salida que utilizaremos. Todas estas opciones se pueden modificar más adelante.
+
+## Elementos básicos
+
+El primer elemento que observamos al generar un Rmd es el encabezado. Éste contiene, entre otros campos, el título, autor, o el tipo de documento de salida. Viene delimitado por tres guiones al principio y al final del mismo.
+
+```{r eval=FALSE}
+---
+title: Mi documento
+author: David García
+output: html_document
+---
+
+```
+
+Después del encabezado, veréis estas líneas:
+
+````
+```{r setup, include=FALSE}`r ''`
+knitr::opts_chunk$set(echo = TRUE)
+```
+````
+
+Como decía, los documentos Rmd combinan texto y código de R. Para diferenciar el texto normal de lo que debería entenderse como código, el código que queramos incluir debe venir delimitado en "bloques", o "chunks" en inglés. Estos bloques vienen identificados en un archivo Rmd por, en principio, lineas con tres tildes seguidas. En la definición del bloque, vemos también una serie de instrucciones entre corchetes: `{r setup, include=FALSE}`. La letra `r` indica que lo que viene a continuación es un bloque escrito en código del lenguaje R. La palabra `setup` es el identificador de este bloque en particular. Cada bloque de código puede tener un nombre o ID asociado que nos permita referenciarlo cuando sea necesario dentro del documento. Tras este identificador, podemos añadir una serie de opciones, que iremos viendo en las siguientes sesiones. En este caso, la opción `include` sirve para decir si queremos que el resultado de correr el código del bloque se muestre en el documento generado.
+
+Dentro del bloque en sí, sólo hay una línea de código, que lo que hace es ajustar una opción global para todos los bloques de nuestro archivo: la opción `echo = TRUE`. Después de este bloque, hay un texto de ejemplo, y otros dos bloques, nombrados como `cars` y `pressure`.
+
+Para generar el documento de salida, pinchamos en la opción `knit` (tejer) del menú de Rstudio. Aparte de la opción de salida que hayamos especificado al crear el documento, podemos seleccionar aquí el tipo de salida que queramos. Si todo ha ido bien, aparecerá una nueva ventana con nuestro documento "tejido" en el formato que hayamos escogido. 
+
+En las siguientes sesiones veremos cómo generar archivos Rmd que incluyan nuestros propios análisis y resultados, cómo modificar la apariencia de estos documentos, utilizar bibliografías, y varias otras opciones.
+
+
+
+
+
+
+

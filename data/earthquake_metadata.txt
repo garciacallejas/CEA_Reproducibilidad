@@ -1,0 +1,77 @@
+# GEM Global Historical Earthquake Catalogue 
+# Version 1.0 released on 2013-06-25.
+# Version 1.0 re-released without NC clause 2014-12-25.
+#
+# Copyright (C) 2013 GEM Foundation 
+#
+# Contributions by: see http://www.globalquakemodel.org/contributors
+#
+# You may use this work under the terms of the CC-BY-SA 3.0 (unported)
+# [http://creativecommons.org/licenses/by-sa/3.0/]
+#
+# THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. INSOFAR 
+# AS THIS WORK IS PROTECTED BY LAWS THAT NEIGHBOUR OR ARE SIMILARLY RELATED
+# TO COPYRIGHT, SUCH AS DATABASE RIGHTS AS INTRODUCED IN EUROPE BY THE 
+# DIRECTIVE 96/9/EC, YOU ALSO MAY USE THIS WORK UNDER THE TERMS OF 
+# CC-BY-SA 3.0 (unported).
+# [http://creativecommons.org/licenses/by-sa/3.0/]
+# ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR 
+# DIRECTLY ALLOWED BY THE APPLICABLE LAW IS PROHIBITED.
+#
+# If you alter, transform, or build upon this work, you may distribute the 
+# resulting work only under the same or similar license to this one. 
+#
+# If you have any questions or if you wish to seek permission to use this
+# data beyond what is offered by CC-BY-SA 3.0 (unported), please contact 
+# the GEM Foundation at: licensing@globalquakemodel.org
+# 
+# More information on licensing: http://www.globalquakemodel.org/licensing
+#
+# -----------------------------------------------------------------------------
+#
+# FORMAT DESCRIPTION
+# 
+# CODE	DDESCRPTION	NOTES
+# En	Event number	unique ID of the catalogue, in chronological order
+# Source	Main source	selected dataset for time, epicentral coordinates, depth, Io
+# Year	Origin time: year	from the selected dataset
+# Mo	Origin time: month	from the selected dataset
+# Da	Origin time: day	from the selected dataset
+# Ho	Origin time: hour	from the selected dataset
+# Mi	Origin time: minutes	from the selected dataset
+# Se	Origin time: seconds	from the selected dataset
+# Area	Epicentral area	from the selected dataset, or (in square brackets) the country (as of today) where the epicentre is located
+# Lat	Epicentral latitude	from the selected dataset
+# Lon	Epicentral longitude	from the selected dataset
+# LatUnc	Uncertainty of epicentral latitude	in km, from the selected dataset, when available
+# LonUnc	Uncertainty of epicentral longitude	in km, from the selected dataset, when available
+# EpDet	Type of epicentre determination	bx: determined according to the method by Gasperini et al. (1999; 2010)
+# 		bw: determined according to the method by Bakun and Wenthworth (1997)
+# 	 	cat: derived from another catalogue
+# 	 	instr: instrumental
+# Dep	depth	in km
+# Io	epicentral intensity	from the selected dataset
+# Msource	source for the magnitude	the same as "Source", with 65 exceptions
+# M	magnitude	from Msource
+# MUnc	magnitude uncertainty	from Msource, when available
+# MType	type of magnitude	w: Mw
+# 	 	s: Ms
+# 	 	jma: Mjma
+# 	 	<blank>: not specified by the source
+# MDet	Type of magnitude determination	bx: determined according to the method by Gasperini et al. (1999; 2010)
+# 	 	bw: determined according to the method by Bakun and Wenthworth (1997)
+# 	 	int: converted from epicentral or maximum intensity
+# 	 	cat: derived from another catalogue
+# 	 	instr: instrumental
+# MDPsource	Source of the Macroseismic Data Points	 
+# MDPn	Number of Macroseismic Data Points	 
+# MDPIx	Maximum intensity	 
+# MDPsc	Macroseimic scale of the MPDs	MM: modified Mercalli
+# 		MSK: Medvedev-Sponheuer-Karnik
+# 		EMS: European Macroseimic Scale
+# 		MCS: Mercalli-Cancani-Sieberg
+# 		JMA: Japan Meteorological Agency
+# Remarks	 Additional information from the source
+# 
+# -----------------------------------------------------------------------------
+# 
