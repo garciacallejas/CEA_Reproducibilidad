@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE, results = FALSE, warning = FALSE, message = F
 
 ## Lectura/escritura de archivos
 
-La estructura de datos más apropiada para cargar datos en R son, generalmente, los dataframes o las matrices. Por supuesto, R acepta muchos tipos de archivos especiales (por ejemplo, archivos raster o vectoriales para funciones SIG), pero por ahora nos centraremos en cargar y escribir datos en formato tabla.
+La estructura de datos más apropiada para cargar datos en R son, generalmente, los dataframes o las matrices. Por supuesto, R acepta muchos tipos de archivos especiales (por ejemplo, archivos raster o vectoriales para funciones SIG), pero nos centraremos en cargar y escribir datos en formato tabla.
 
 Comenzaremos por repasar las funciones básicas de lectura y escritura de datos en R.
 
@@ -359,9 +359,9 @@ head(eq_long_clean)
 
 ## Figuras con ggplot2
 
-En esta sesión veremos cómo realizar diferentes tipos de gráficos en R, y algunas opciones de personalización de las más usadas. Usaremos el paquete `ggplot2`, que es seguramente el más usado hoy día para producir gráficos de calidad. R tiene otros paquetes y funciones para generar gráficos, pero `ggplot2` es intuitivo, fácilmente editable, y tiene una documentación muy buena. El acrónimo `ggplot2` viene de "grammar of graphics plots", por el hecho de que este conjunto de funciones esta basado en la llamada "Grammar of Graphics", una sintaxis que estructura la creación de gráficos a partir de capas con diferente información. 
+Para crear figuras en R usaremos el paquete `ggplot2`, que es seguramente el más usado hoy día para producir gráficos de calidad. R tiene otros paquetes y funciones para generar gráficos, pero `ggplot2` es intuitivo, fácilmente editable, y tiene una documentación muy buena. El acrónimo `ggplot2` viene de "grammar of graphics plots", por el hecho de que este conjunto de funciones esta basado en la llamada "Grammar of Graphics", una sintaxis que estructura la creación de gráficos a partir de capas con diferente información. 
 
-Como primer ejemplo, vamos a crear un gráfico de puntos, el mismo que usamos para la sesión sobre modelos de regresión lineal
+Como primer ejemplo, vamos a crear un gráfico de puntos.
 
 ```{r}
 # este paquete incluye ggplot2
