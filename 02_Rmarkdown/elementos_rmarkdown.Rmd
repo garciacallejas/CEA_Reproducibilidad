@@ -246,19 +246,21 @@ library(tidyverse)
   ```{r mitabla1, results='asis'}
   knitr::kable(mtcars[1:5,])
   ```
-  
-  Además de `kable`, existen varios paquetes que también permiten generar tablas en varios formatos, como el paquete `flextable`:
-  
-  ```
-  flextable::flextable(mtcars[1:5,])
-  ```
-  
   Al igual que con las imágenes, podemos añadir un pie de tabla, entre otras opciones
   
   ```{r mitabla2, results='asis'}
   knitr::kable(mtcars[1:5,],
-               caption = "The first 5 rows of the mtcars data",
+               caption = "tabla básica con kable",
                digits = 2)
+  ```
+  
+  Además de `kable`, existen varios paquetes que también permiten generar tablas en varios formatos, como el paquete `stargazer`:
+  
+  ```{r results='asis'}
+  stargazer::stargazer(mtcars[1:5,],
+  summary = FALSE, 
+  header = FALSE, 
+  title = "tabla básica con stargazer")
   ```
   Y también, de igual forma que sucede con las imágenes, es posible que las tablas no aparezcan exactamente en el lugar del documento donde las hemos definido (esto es un problema recurrente en \LaTeX{}). Para tener mayor control sobre el posicionamiento de nuestras tablas, podemos usar el paquete `kableExtra` con la siguiente opción:
   
@@ -293,6 +295,17 @@ library(tidyverse)
       in_header: latex_options.tex
   ```
   
+  Por último, es muy habitual que queramos mostrar en una tabla el resultado de análisis estadísticos. Para ello, la mejor opción es usar -de nuevo- el paquete `stargazer`:
+  
+  ```{r results='asis'}
+  ejemplo <- lm(Petal.Width ~ Petal.Length,data = iris)
+  
+  stargazer::stargazer(ejemplo, 
+  header = FALSE, 
+  label = "tab:regresion1", 
+  type=ifelse(knitr::is_latex_output(),"latex","html"), 
+  title="tabla de regresión con stargazer")
+  ```
 * EXPRESIONES MATEMÁTICAS
 
   Rmarkdown puede aprovechar la potente sintaxis de \LaTeX{} para generar todo tipo de expresiones matemáticas. Se pueden incluir expresiones matemáticas o bien entre el texto, encapsulándolas entre dos símbolos de dólar `$ -expresión- $`, por ejemplo para mostrar pequeñas expresiones ($\lambda = f - 1$), o bien como expresiones independientes, con la sintaxis:
@@ -345,9 +358,9 @@ library(tidyverse)
     ```
     ````
   
-    Podemos referenciar esta figura con la orden `\@ref(fig:lince)`. En el documento final quedará como una referencia a la figura \@ref(fig:lince). De la misma manera, podemos referenciar tablas (de nuevo, una tabla dentro de un único bloque de código): `\@ref(tab:'id de bloque')`. Por ejemplo, con el bloque llamado `mitabla2`, más arriba: `\@ref(tab:mitabla2)` genera una referencia a la tabla \@ref(tab:mitabla2).
+    Podemos referenciar esta figura con la orden `\@ref(fig:lince)`. En el documento final quedará como una referencia a la figura \@ref(fig:lince). De la misma manera, podemos referenciar tablas (de nuevo, una tabla dentro de un único bloque de código): `\@ref(tab:'id de bloque')`. Por ejemplo, con el bloque llamado `mitabla2`, más arriba: `\@ref(tab:mitabla2)` genera una referencia a la tabla \@ref(tab:mitabla2). Fijaos en la sintaxis de stargazer (tabla \@ref(tab:regresion1)), que es ligeramente diferente.
   
-    También se pueden referenciar ecuaciiones. Para ello, al escribir la ecuación (como vimos más arriba), incluimos un id que nos permita referenciarla más adelante:
+    También se pueden referenciar ecuaciones. Para ello, al escribir la ecuación (como vimos más arriba), incluimos un id que nos permita referenciarla más adelante:
   
     ```
     \begin{equation}
@@ -382,13 +395,17 @@ library(tidyverse)
     bibliography: referencias.bib
     ```
     
-    Cuando nuestro 'referencias.bib' esté incluido en el encabezado, ya podremos citar sus elementos. En este ejemplo, he incluido dos referencias, la primera con la id 'Broman2018', y la segunda con id 'Rodriguez-Sanchez2016'. Para citarlos, basta con escribir, por ejemplo, `[@Broman2018]`. A continuación cito a [@Broman2018] y a [@Rodriguez-Sanchez2016]. Al citar al menos un documento externo, se genera automáticamente una lista de referencias al final del documento, de tal manera que podemos nombrar esa sección como queramos (en este documento, la he llamado 'referencias', y la muestro en su propia página nueva).
+    Cuando nuestro 'referencias.bib' esté incluido en el encabezado, ya podremos citar sus elementos. En este ejemplo, he incluido dos referencias, la primera con la id 'Broman2018', y la segunda con id 'Rodriguez-Sanchez2016'. Para citarlos, basta con escribir, por ejemplo, `@Broman2018`, o bien entre corchetes si queremos la referencia entre paréntesis: `[@Broman2018]`. A continuación cito a @Broman2018 y a [@Rodriguez-Sanchez2016]. También podemos citar sólo el año (`[-@Broman2018]`), o citar páginas concretas (`[@Broman2018 2-4]`). Al citar al menos un documento externo, se genera automáticamente una lista de referencias al final del documento, de tal manera que podemos nombrar esa sección como queramos (en este documento, la he llamado 'referencias', y la muestro en su propia página nueva). No es posible mover la sección de referencias, siempre aparecerá al final del documento.
     
     También es posible modificar el estilo que tendrán nuestras referencias (ver ejemplos en [https://www.zotero.org/styles](https://www.zotero.org/styles)). Cada estilo viene especificado por otro archivo externo, en este caso con extensión '.csl'. Por ejemplo, si queremos utilizar el estilo que usa la revista 'Nature' para sus referencias, podemos bajar el archivo 'nature.csl' a nuestra carpeta, y referenciarlo en el encabezado de nuestro .Rmd:
     
     ```
     csl: nature.csl
     ```
+    
+  + NOTAS AL PIE
+  
+    Se pueden crear con esta sintaxis: `texto^[nota al pie]`. Por ejemplo^[esto es una nota].
     
 * FORMATO DE PÁGINA
 
@@ -466,6 +483,13 @@ library(tidyverse)
       - \fancyfoot[CO,CE]{Texto pie de página}
     ```
     
+    Otra opción interesante es eliminar los números de página que vienen incluidos por defecto al "tejer" el documento en pdf. 
+    
+    ```
+    header-includes:
+      - \pagenumbering{gobble}
+    ```
+    
     En general, el texto entre llaves es texto que acepta sintaxis \LaTeX{}, por lo que podemos incluir números de página (`\thepage`) u otros elementos. Si queremos algo más detallado, podemos crear un archivo .tex con el encabezado/pie de página que deseemos, y referenciarlo en nuestro Rmd:
     
     ```
@@ -481,12 +505,29 @@ library(tidyverse)
 
 ### ENCABEZADO COMPLETO
 
- Podemos resumir varias de las opciones que hemos ido desgranando y mostrar cómo quedaría un encabezado que integre varias de ellas:
+ Podemos resumir varias de las opciones que hemos ido desgranando y mostrar cómo quedaría un encabezado que integre varias de ellas. En particular, éste es el encabezado del archivo .Rmd asociado a estos apuntes:
 
 ```
-
+title: "Elementos de Rmarkdown"
+author: "David García Callejas"
+lang: es
+output:
+  bookdown::pdf_document2:
+    number_sections: false
+    fig_caption: yes
+    toc: false
+    includes:
+      in_header: latex_options.tex
+  bookdown::html_document2:
+    number_sections: false
+    fig_caption: yes
+    df_print: paged
+bibliography: referencias.bib
+header-includes:
+- \usepackage{fancyhdr}
+- \pagestyle{fancy}
+- \fancyhead[CO,CE]{Elementos de Rmarkdown}
 ```
-
 
 ### Aplicaciones avanzadas
 
