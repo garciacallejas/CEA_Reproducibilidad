@@ -67,3 +67,7 @@ https://bookdown.org/yihui/rmarkdown-cookbook/
 
 https://danovando.github.io/publications-with-rmarkdown/
 
+* Opciones para generar pdf
+
+https://rmarkdown.rstudio.com/pdf_document_format.html%2F#Overview
+
