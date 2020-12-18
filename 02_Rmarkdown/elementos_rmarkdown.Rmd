@@ -198,15 +198,15 @@ library(tidyverse)
   
   Una alternativa más intuitiva puede ser usar las opciones `out.width` y `out.height`, que aceptan valores de porcentaje con respecto al marco donde se encaja la imagen:
   
-  ````
-  ```{r out.width = "50%"}`r ''`
-  ggplot(cars, aes(speed, dist)) + geom_point()
-  ```
-  ````
+````
+```{r out.width = "50%"}`r ''`
+ggplot(cars, aes(speed, dist)) + geom_point()
+```
+````
   
-  ```{r out.width = "50%",echo = FALSE}
-  ggplot(cars, aes(speed, dist)) + geom_point()
-  ```
+```{r out.width = "50%",echo = FALSE}
+ggplot(cars, aes(speed, dist)) + geom_point()
+```
   
   \newpage
   
@@ -216,21 +216,21 @@ library(tidyverse)
   
   Esta sintaxis no permite mucha flexibilidad. Para modificar el tamaño u otros aspectos de la imagen, es más apropiado importar imágenes dentro de bloques de código, con la función `include_graphics`. En la definición del bloque podemos definir opciones como el alineado (`fig.align`), o el tamaño, como vimos arriba (`out.width` y `out.height`). También podemos especificar el pie de figura con la opción `fig.cap`. Para ello, nos aseguraremos de que en el encabezado del documento tengamos la siguiente opción:
   
-  ```
-    pdf_document: 
-      fig_caption: true
-  ```
+```
+  pdf_document: 
+    fig_caption: true
+```
   El código y la figura con las opciones elegidas:
   
-  ````
-  ```{r lince, fig.align = 'center', out.width = "50%", fig.cap='Lince ibérico, segunda versión'}`r ''`
+````
+`r ''````{r lince, fig.align = 'center', out.width = "50%", fig.cap='Lince ibérico, segunda versión'}
     knitr::include_graphics(here::here("data/figuras", "Lynx_pardinus.jpg"))
-  ```
-  ````
+```
+````
   
-  ```{r lince, fig.align = 'center', out.width = "50%", fig.cap='Lince ibérico, segunda versión', echo=FALSE}
-    knitr::include_graphics(here::here("data/figuras", "Lynx_pardinus.jpg"))
-  ```
+```{r lince, fig.align = 'center', out.width = "50%", fig.cap='Lince ibérico, segunda versión', echo=FALSE}
+knitr::include_graphics(here::here("data/figuras", "Lynx_pardinus.jpg"))
+```
   
 * TABLAS
 
@@ -243,78 +243,97 @@ library(tidyverse)
 
   Existen multitud de opciones para personalizar tablas de este estilo, pero no las veremos aquí (se pueden consultar en el [manual de Pandoc](https://pandoc.org/MANUAL.html#tables)). En general, es mucho más interesante generar tablas de manera automática a partir de datos que ya tengamos en matrices o dataframes. Para ello, una de las opciones más utilizadas es a través de la función `kable` de `knitr`:
 
-  ```{r mitabla1, results='asis'}
-  knitr::kable(mtcars[1:5,])
-  ```
+```{r mitabla1}
+knitr::kable(mtcars[1:5,])
+```
+  
+  \newpage
+  
   Al igual que con las imágenes, podemos añadir un pie de tabla, entre otras opciones
   
-  ```{r mitabla2, results='asis'}
-  knitr::kable(mtcars[1:5,],
-               caption = "tabla básica con kable",
-               digits = 2)
-  ```
+```{r mitabla2}
+knitr::kable(mtcars[1:5,],
+             caption = "tabla básica con kable",
+             digits = 2)
+```
   
   Además de `kable`, existen varios paquetes que también permiten generar tablas en varios formatos, como el paquete `stargazer`:
   
-  ```{r results='asis'}
-  stargazer::stargazer(mtcars[1:5,],
-  summary = FALSE, 
-  header = FALSE, 
-  title = "tabla básica con stargazer")
-  ```
+````
+```{r results='asis', echo = FALSE}`r ''`
+stargazer::stargazer(mtcars[1:5,],
+summary = FALSE, 
+header = FALSE, 
+title = "tabla básica con stargazer")
+```
+````
+  
+```{r results='asis', echo = FALSE}
+stargazer::stargazer(mtcars[1:5,],
+summary = FALSE, 
+header = FALSE, 
+title = "tabla básica con stargazer")
+```
+  
+  Es importante remarcar que `stargazer` lo que hace es generar código \LaTeX{} o html que será traducido al documento final. Al generarse estas tablas dentro de bloques de código, `knitr` tiene que entender que el output de un bloque así no es el resultado de ninguna operación en R, sino que se debe compilar como si fuera texto. Esto se especifica con la opción `results='asis'` en la definición de los bloques en los que tengamos tablas `stargazer`. 
+  
   Y también, de igual forma que sucede con las imágenes, es posible que las tablas no aparezcan exactamente en el lugar del documento donde las hemos definido (esto es un problema recurrente en \LaTeX{}). Para tener mayor control sobre el posicionamiento de nuestras tablas, podemos usar el paquete `kableExtra` con la siguiente opción:
   
-  ```
-  knitr::kable(mtcars[1:5,],
-               caption = "The first 5 rows of the mtcars data",
-               digits = 2) %>%
-  kableExtra::kable_styling(latex_options = "hold_position")
-  ```
+```
+knitr::kable(mtcars[1:5,],
+             caption = "The first 5 rows of the mtcars data",
+              digits = 2) %>%
+kableExtra::kable_styling(latex_options = "hold_position")
+```
   
   Esta solución, sin embargo, puede generar cambios en el estilo de las tablas, por la diferente configuración de `kable` y `kableExtra` (https://github.com/haozhu233/kableExtra/issues/265).
   
   Una solución más general para solucionar el posicionamiento de figuras y tablas (al generar pdfs) es forzar al traductor de \LaTeX{} a mantener el posicionamiento original. Para ello deberíamos incluir código de \LaTeX{} en nuestro documento .Rmd. Esto se puede hacer incluyendo el archivo .tex que queramos referenciar, en el encabezado del documento .Rmd. En este caso usamos el siguiente código de \LaTeX{}:
   
-  ```
-  \usepackage{float}
-  \let\origfigure\figure
-  \let\endorigfigure\endfigure
-  \renewenvironment{figure}[1][2] {
-    \expandafter\origfigure\expandafter[H]
-  } {
-    \endorigfigure
-  }
-  ```
+```
+\usepackage{float}
+\let\origfigure\figure
+\let\endorigfigure\endfigure
+\renewenvironment{figure}[1][2] {
+  \expandafter\origfigure\expandafter[H]
+} {
+  \endorigfigure
+}
+```
+
   Estas líneas las guardamos en un archivo .tex en el mismo directorio que nuestro archivo .Rmd, por ejemplo `latex_options.tex`. En el encabezado del documento .Rmd, incluiremos:
   
-  ```
-  output:
-  pdf_document:
-    fig_caption: yes        
-    includes:  
-      in_header: latex_options.tex
-  ```
+```
+output:
+pdf_document:
+  fig_caption: yes        
+  includes:  
+    in_header: latex_options.tex
+```
   
   Por último, es muy habitual que queramos mostrar en una tabla el resultado de análisis estadísticos. Para ello, la mejor opción es usar -de nuevo- el paquete `stargazer`:
   
-  ```{r results='asis'}
-  ejemplo <- lm(Petal.Width ~ Petal.Length,data = iris)
+```{r results='asis'}
+ejemplo <- lm(Petal.Width ~ Petal.Length,data = iris)
   
-  stargazer::stargazer(ejemplo, 
-  header = FALSE, 
-  label = "tab:regresion1", 
-  type=ifelse(knitr::is_latex_output(),"latex","html"), 
-  title="tabla de regresión con stargazer")
-  ```
+stargazer::stargazer(ejemplo, 
+header = FALSE, 
+label = "tab:regresion1", 
+type=ifelse(knitr::is_latex_output(),"latex","html"), 
+title="tabla de regresión con stargazer")
+```
+
+\newpage
+
 * EXPRESIONES MATEMÁTICAS
 
   Rmarkdown puede aprovechar la potente sintaxis de \LaTeX{} para generar todo tipo de expresiones matemáticas. Se pueden incluir expresiones matemáticas o bien entre el texto, encapsulándolas entre dos símbolos de dólar `$ -expresión- $`, por ejemplo para mostrar pequeñas expresiones ($\lambda = f - 1$), o bien como expresiones independientes, con la sintaxis:
   
-  ```
-  \begin{equation}
-    mi-ecuación
-  \end{equation}
-  ```
+```
+\begin{equation}
+  mi-ecuación
+\end{equation}
+```
   Por ejemplo:
   
   \begin{equation}
@@ -332,29 +351,29 @@ library(tidyverse)
     Para usar esta funcionalidad, debemos incluir en el encabezado la siguiente opción (sustituyendo 'pdf' por 'html' o 'word', si queremos otro formato):
   
     ```
-    output:
-      bookdown::pdf_document2: default
+     output:
+       bookdown::pdf_document2: default
     ```
-  
+    
     Si tenemos otras opciones en el encabezado, como incluir las opciones de \LaTeX{} que vimos para posicionar figuras o tablas, y queremos generar tanto pdf como html, el encabezado completo quedaría similar a este:
   
     ```
     output:
-    bookdown::pdf_document2:
-      fig_caption: yes
-      includes:
-        in_header: latex_options.tex
-    bookdown::html_document2:
-      fig_caption: yes
-      df_print: paged
+      bookdown::pdf_document2:
+        fig_caption: yes
+        includes:
+          in_header: latex_options.tex
+      bookdown::html_document2:
+        fig_caption: yes
+        df_print: paged
     ```
-  
+    
     Cada figura o tabla debe estar incluida en un único bloque con su id correspondiente, y además, debe tener un pie de figura (caption). Por ejemplo, el bloque que vimos más arriba para mostrar una figura externa tiene la id 'lince':
   
     ````
     ```{r lince, fig.align = 'center', out.width = "50%", 
-        fig.cap='Lince ibérico, segunda versión'}`r ''`
-      knitr::include_graphics(here::here("data/figuras", "Lynx_pardinus.jpg"))
+        fig.cap='Lince ibérico, segunda versión'}`r ''` 
+    knitr::include_graphics(here::here("data/figuras", "Lynx_pardinus.jpg"))
     ```
     ````
   
@@ -395,14 +414,14 @@ library(tidyverse)
     bibliography: referencias.bib
     ```
     
-    Cuando nuestro 'referencias.bib' esté incluido en el encabezado, ya podremos citar sus elementos. En este ejemplo, he incluido dos referencias, la primera con la id 'Broman2018', y la segunda con id 'Rodriguez-Sanchez2016'. Para citarlos, basta con escribir, por ejemplo, `@Broman2018`, o bien entre corchetes si queremos la referencia entre paréntesis: `[@Broman2018]`. A continuación cito a @Broman2018 y a [@Rodriguez-Sanchez2016]. También podemos citar sólo el año (`[-@Broman2018]`), o citar páginas concretas (`[@Broman2018 2-4]`). Al citar al menos un documento externo, se genera automáticamente una lista de referencias al final del documento, de tal manera que podemos nombrar esa sección como queramos (en este documento, la he llamado 'referencias', y la muestro en su propia página nueva). No es posible mover la sección de referencias, siempre aparecerá al final del documento.
+    Cuando nuestro 'referencias.bib' esté incluido en el encabezado, ya podremos citar sus elementos. En este ejemplo, he incluido dos referencias, la primera con la id 'Broman2018', y la segunda con id 'Rodriguez-Sanchez2016'. Para citarlos, basta con escribir, por ejemplo, `@Broman2018`, o bien entre corchetes si queremos la referencia entre paréntesis: `[@Broman2018]`. A continuación cito a @Broman2018 y a [@Rodriguez-Sanchez2016]. También podemos citar sólo el año (`[-@Broman2018]`), o citar páginas concretas (`[@Broman2018 2-4]`). Al citar al menos un documento externo, se genera automáticamente una lista de referencias al final del documento, de tal manera que podemos nombrar esa sección como queramos (en este documento, la he llamado 'referencias', y la muestro en su propia página nueva). Para 'mover' la sección de referencias, se puede usar la orden `<div id="refs"></div>`, y las referencias aparecerán en ese punto del documento. A pesar de ser código html, debería funcionar también al compilar en pdf.
     
     También es posible modificar el estilo que tendrán nuestras referencias (ver ejemplos en [https://www.zotero.org/styles](https://www.zotero.org/styles)). Cada estilo viene especificado por otro archivo externo, en este caso con extensión '.csl'. Por ejemplo, si queremos utilizar el estilo que usa la revista 'Nature' para sus referencias, podemos bajar el archivo 'nature.csl' a nuestra carpeta, y referenciarlo en el encabezado de nuestro .Rmd:
     
     ```
     csl: nature.csl
     ```
-    
+
   + NOTAS AL PIE
   
     Se pueden crear con esta sintaxis: `texto^[nota al pie]`. Por ejemplo^[esto es una nota].
@@ -439,19 +458,19 @@ library(tidyverse)
     
     Por ejemplo:
     
-    ```{r, attr.source='.numberLines'}
-      if (TRUE) {
-        x <- 1:10
-        x + 1
-      }
-    ```
+```{r, attr.source='.numberLines'}
+  if (TRUE) {
+    x <- 1:10
+    x + 1
+  }
+```
 
     Esta numeración se reinicia en cada bloque:
 
-    ```{r, attr.source='.numberLines'}
-      y <- seq(1:5)
-      x <- sqrt(y)
-    ```
+```{r, attr.source='.numberLines'}
+  y <- seq(1:5)
+  x <- sqrt(y)
+```
     
   + MÁRGENES
     
