@@ -1,0 +1,17 @@
+---
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+### Tarea de aprovechamiento: Curso "Informes y análisis reproducibles con R y Rmarkdown", 2020
+  
+  La tarea consiste en integrar varios de los ingredientes que hemos visto a lo largo del curso, para generar un documento reproducible y compartible. 
+  
+  El alumno debe generar un documento .Rmd, incluyendo las opciones que crea necesarias (generación de tablas/figuras/análisis estadísticos, referencias, etc.). Este documento, y los datos asociados si los hubiere, los hará disponibles en un repositorio público de GitHub, de manera que cualquier usuario pueda descargar el contenido del repositorio y reproducir el documento generado, sea en pdf/html/word.
+  
+  Así pues, como "entrega" a través de la web del curso, sólo es necesario indicar la url del repositorio de GitHub asociado.
+  
+  Fecha límite: 10/01/2021
+  

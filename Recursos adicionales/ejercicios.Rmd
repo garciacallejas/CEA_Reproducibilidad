@@ -28,7 +28,9 @@ d) En Rstudio, crea un nuevo documento Rmd dentro de ese proyecto.
 
 e) Sube los cambios que has hecho en tu ordenador a tu cuenta de GitHub.
 
-**3** Clona el repositorio https://github.com/Pakillo/COVID19-Andalucia.git y genera en tu ordenador el informe asociado.
+**3** 
+
+Clona el repositorio https://github.com/Pakillo/COVID19-Andalucia.git y genera en tu ordenador el informe asociado.
 
 ### Rmarkdown
 

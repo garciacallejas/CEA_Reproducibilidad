@@ -1,6 +1,7 @@
 ---
-title: "Manejo de datos, figuras y tablas en R usando tidyverse"
+title: "Básicos de R: lectura/escritura, manejo de datos, figuras"
 author: "David García Callejas"
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -720,7 +721,7 @@ figura19 <- ggplot(sw3, aes(x = height, y = mass))+
 
 Además de dividir una figura por categorías, R nos permite juntar varias figuras en una sola imagen. Para ello instalamos y cargamos el paquete `patchwork`.
 ```{r}
-install.packages("patchwork")
+# install.packages("patchwork")
 library(patchwork)
 
 figura.combinada <- figura9 + figura10

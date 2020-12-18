@@ -1,7 +1,7 @@
 ---
 title: "Introduction to GitHub <br> and R packages with RStudio"
-author: <span style="color:black">François Rousseu</span>
-date: <span style="color:black">`r Sys.Date()`</span>
+author: "<span style="color:black">François Rousseu</span>"
+date: "<span style="color:black">`r Sys.Date()`</span>"
 output:
   html_document:
     depth: 4
@@ -13,6 +13,9 @@ output:
     toc_float:
       collapsed: no
       smooth_scroll: no
+  pdf_document:
+    toc: yes
+    toc_depth: '5'
 ---
 
 <script>
