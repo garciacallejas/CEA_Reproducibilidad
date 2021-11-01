@@ -323,7 +323,14 @@ type=ifelse(knitr::is_latex_output(),"latex","html"),
 title="tabla de regresión con stargazer")
 ```
 
-\newpage
+* PIES DE FIGURAS Y TABLAS
+
+  Por defecto, los pies de figura son creados con la forma `Figure X:`, y los pies de tabla, con `Table X:`. Es posible elegir el idioma en el que se generan, incluyendo la opción `lang: es` (en el caso del español) en el encabezado como línea independiente. Igualmente, se pueden personalizar incluyendo el siguiente código directamente en el .Rmd o en un archivo .tex referenciado:
+  
+```
+\def\figurename{MiPieDeFigura}
+\def\tablename{MiPieDeTabla}
+```
 
 * EXPRESIONES MATEMÁTICAS
 
