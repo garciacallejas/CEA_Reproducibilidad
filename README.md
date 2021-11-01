@@ -15,10 +15,11 @@ El curso se articula en cuatro jornadas donde se trabajará de forma iterativa. 
 
 El desarrollo del curso será principalmente práctico:
 
-* Introducción a R y Rmarkdown en el contexto de análisis reproducibles (10 Dic.) Repaso general de R y análisis estadísticos. Generación de tablas y figuras. Ciencia reproducible: ¿qué es, para qué sirve?. Introducción a Rmarkdown y knitr.
-* Informes básicos con Rmarkdown (11 Dic.) Generación de documentos en formato word, pdf y html con knitr y Rmarkdown. Estructura de un archivo .Rmd. Tablas y figuras en knitr.
-* Informes básicos con Rmarkdown (17 Dic.) Formato del texto. Visualización y ocultación de código, resultados, y mensajes. Otros elementos de los informes: pies de figuras, encabezado y pie de página, ecuaciones, referencias, integración con gestores de referencias.
-* Rmarkdown avanzado (18 Dic.) Informes personalizados usando css. Generación de índices. Otras utilidades: creación de libros, páginas web, aplicaciones shiny y presentaciones.
+* Sesión 1: Introducción a R y Rmarkdown en el contexto de análisis reproducibles. Repaso general de R y análisis estadísticos. Generación de tablas y figuras. Ciencia reproducible: ¿qué es, para qué sirve?. Introducción a Rmarkdown y knitr. Control de versiones con Github.
+* Sesión 2: Informes básicos con Rmarkdown. Generación de documentos en formato word, pdf y html con knitr y Rmarkdown. Estructura de un archivo .Rmd. Tablas y figuras en knitr.
+* Sesión 3: Informes básicos con Rmarkdown. Formato del texto. Visualización y ocultación de código, resultados, y mensajes. Otros elementos de los informes: pies de figuras, encabezado y pie de página, ecuaciones, referencias, integración con gestores de referencias.
+* Sesión 4: Rmarkdown avanzado. Informes personalizados usando css. Generación de índices. Otras utilidades: creación de libros, páginas web, aplicaciones shiny y presentaciones.
+* Sesión 5: Creación de funciones y paquetes en R. Publicación en Github.
 
 ### DESTINATARIOS:
 Alumnos con un conocimiento básico de R que deseen integrar análisis y visualización de datos en informes, de manera eficiente y reproducible.
