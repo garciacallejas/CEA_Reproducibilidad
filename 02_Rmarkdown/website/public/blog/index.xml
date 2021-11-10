@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blog on David García Callejas</title>
+    <link>https://garciacallejas.github.io/blog/</link>
+    <description>Recent content in Blog on David García Callejas</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 04 Jun 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://garciacallejas.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Working setup</title>
+      <link>https://garciacallejas.github.io/blog/working_setup/</link>
+      <pubDate>Thu, 04 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://garciacallejas.github.io/blog/working_setup/</guid>
+      <description>I often experiment with different workflows and adapt them to my needs and likings. I have written papers in Word, Latex, google docs, and Markdown, while I have produced and tweaked figures with R, Gimp, Inkscape, the yEd diagram editor, etc. I will quickly summarize what, for me, is the best workflow for a complete project.
+1 - Setting up a code/data project
+ Set up a github repository for the code and, if it applies, for the raw data.</description>
+    </item>
+    
+    <item>
+      <title>Parallel R with SLURM</title>
+      <link>https://garciacallejas.github.io/blog/parallelr/</link>
+      <pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://garciacallejas.github.io/blog/parallelr/</guid>
+      <description>This post is a work in progress! I will incorporate new ideas as I try them
+Types of parallelization SLURM is a workload manager for organizing computing resources in Linux clusters. In order to submit jobs to a cluster managed via SLURM, these have to be submitted via bash scripts that call the actual program to run. Focusing on R, one may think on two general types of parallelizing scripts.</description>
+    </item>
+    
+    <item>
+      <title>test1</title>
+      <link>https://garciacallejas.github.io/blog/test1/</link>
+      <pubDate>Sun, 17 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://garciacallejas.github.io/blog/test1/</guid>
+      <description>hey</description>
+    </item>
+    
+  </channel>
+</rss>

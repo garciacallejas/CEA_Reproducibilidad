@@ -1,0 +1,14 @@
+theme = "vienna"
+baseURL = "https://garciacallejas.github.io/"
+languageCode = "en-us"
+title = "David García Callejas"
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$"]
+
+[params]
+
+    twitter = "@callejas_eco"
+    github = "garciacallejas"
+    googlescholar = "Tx-hZQEAAAAJ&hl=en"
+    author = "David García Callejas"
+    contact = "mailto:david.garcia.callejas@gmail.com"
+

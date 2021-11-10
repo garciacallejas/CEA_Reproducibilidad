@@ -1,0 +1,33 @@
+---
+title: "Working setup"
+author: "David García Callejas"
+date: 2020-06-04
+html_document:
+    highlight: pygments
+---
+
+
+
+<p>I often experiment with different workflows and adapt them to my needs and likings. I have written papers in Word, Latex, google docs, and Markdown, while I have produced and tweaked figures with R, Gimp, Inkscape, the yEd diagram editor, etc. I will quickly summarize what, for me, is the best workflow for a complete project.</p>
+<p><strong>1 - Setting up a code/data project</strong></p>
+<ul>
+<li><p>Set up a github repository for the code and, if it applies, for the raw data. Note that ideally data may be stored externally, e.g. in Zenodo or similar long-term archives.</p></li>
+<li><p>Link that repository to Rstudio. I prefer creating first the github repo and then cheking it out to Rstudio by creating a project from it. Keeping the github repo updated is particularly important for me since I have, right now, 3 computers in which I eventually work (!). Since I use https to connect to github, I found the following totally life-saving, in order not to write username and password for every connection: <code>git config --global credential.helper 'cache --timeout=10000000'</code> will store your info for the time you specify.</p></li>
+</ul>
+<p>When I have gone through seven hells and back fighting the code and data, and have produced results that I can write about (figures in ggplot, as much as possible), I so far have not used Rmarkdown to generate reports. Probably because my R scripts are too computationally expensive usually, and do not fit well in that workflow. So I switch to a proper text editor (tbh, I also prefer <em>not</em> to write in Rstudio, but that’s personal taste).</p>
+<p><strong>2 - Writing setup</strong></p>
+<p>Right now, my needs are for a setup that:</p>
+<ul>
+<li>Allows me to switch back and forth to word documents if co-authors need it</li>
+<li>Easily renders quality math</li>
+<li>Automatically handles references, etc.</li>
+<li>Integrates github</li>
+</ul>
+<p>Latex is, at the end of the day, a fantastic typesetting language, but for a standard paper is overkill. Standard markdown is, right now, what I think provides the best balance between clarity, ease of use, and the above requirements, although surprisingly I have found it harder to find info about bare markdown than about, say, the Rmarkdown flavour.</p>
+<p>In a .md document, figures are included as:</p>
+<p><code>![caption \label{Fig1}](path/Fig_1.png){width=100%}</code></p>
+<p>and can be properly referenced in-line. Citations are included via the <code>[@citation-key]</code> command. For working with the .md files, I use Atom. Atom is an impressive editor, minimalistic, totally customizable, open… and it neatly integrates git and github. For auto-completing the citation keys of my bib file in Atom, the <code>autocomplete-bibtex</code> package works perfect. I, however, do not like the rest of the text to be auto-completed, so in the core options for autocomplete, i.e. the settings of <code>autocomplete-plus</code>, I set the minimum word length to a length that will prevent autocompletion to be switched on, say 100 characters. This setting does not affect the bibtex autocomplete.</p>
+<p>So, since I usually keep the writing separated from the code, I create another github repo for the markdown documents, and I clone it directly via Atom. This is done via the command palette (<code>ctrl+shift+p</code>) typing <code>github:clone</code> (once the github package is installed). Afterwards, when I need to convert markdown to word or pdf, I can call pandoc from a shell within Atom, by installing the package “platformio-ide-terminal”. The pandoc call is of the form</p>
+<p><code>~$ pandoc -s -o file.pdf file.md --bibliography /path/to/library.bib --csl /path/to/style.csl</code></p>
+<p>If using Rmarkdown, there are even more options, like the <code>redoc</code> R package.</p>
+<p>This workflow is fantastic for projects in which I am the main author and only share more or less polished versions of the document, which I then integrate back in the markdown doc. I love the aesthetics of Atom and its simplicity. However, right now, for more collaborative projects, I simply use google docs with its Zotero integration.</p>

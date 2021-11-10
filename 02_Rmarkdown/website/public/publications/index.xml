@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Publications on David García Callejas</title>
+    <link>https://garciacallejas.github.io/publications/</link>
+    <description>Recent content in Publications on David García Callejas</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 15 May 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://garciacallejas.github.io/publications/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title></title>
+      <link>https://garciacallejas.github.io/publications/publications/</link>
+      <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://garciacallejas.github.io/publications/publications/</guid>
+      <description>Research · Publications and CV · Teaching · Blog
+ Curriculum Vitae  Full cv: PDF  Refereed Journal Publications Please contact me if you want a copy of the publications that are behind paywalls.
+  Taheri, S., García-Callejas, D., Araújo, M.B. In press. Discriminating climate, land-cover and random effects on species range dynamics. Global Change Biology. LINK.
+  García-Callejas, D., Godoy, O., Bartomeus, I. 2020. cxr: A toolbox for modelling species coexistence in R.</description>
+    </item>
+    
+  </channel>
+</rss>

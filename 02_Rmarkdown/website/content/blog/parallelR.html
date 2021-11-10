@@ -1,0 +1,131 @@
+---
+title: "Parallel R with SLURM"
+author: "David García Callejas"
+date: 2020-05-18
+html_document:
+    highlight: pygments
+---
+
+
+
+<p><em>This post is a work in progress! I will incorporate new ideas as I try them</em></p>
+<div id="types-of-parallelization" class="section level2">
+<h2>Types of parallelization</h2>
+<p>SLURM is a workload manager for organizing computing resources in Linux clusters. In order to submit jobs to a cluster managed via SLURM, these have to be submitted via bash scripts that call the actual program to run. Focusing on R, one may think on two general types of parallelizing scripts. First, ‘internal’ parallelization within your script can be accomplished using the <code>foreach</code> and <code>doParallel</code> packages, or alternatively via functions that incorporate internal parallelization schemes, such as <code>brm</code> from package <code>brms</code>. Second, ‘external’ parallelization setting up a job array in SLURM.</p>
+</div>
+<div id="parallelization-with-foreach" class="section level2">
+<h2>Parallelization with foreach</h2>
+<p>The key here is to generate a number of jobs, assign them to actual cores, and split <code>foreach</code> loops among these jobs. A basic skeleton of such workflow, in Linux, is:</p>
+<pre class="r"><code># load packages -----------------------------------------------------------
+library(foreach)
+library(doParallel)
+
+# set number of cores -----------------------------------------------------
+workers &lt;- 10
+cl &lt;- parallel::makeCluster(workers)
+# register the cluster for using foreach
+doParallel::registerDoParallel(cl)
+
+# run some time-intensive task --------------------------------------------
+x &lt;- iris[which(iris[,5] != &quot;setosa&quot;), c(1,5)]
+trials &lt;- 10000
+
+r &lt;- foreach(icount(trials), 
+             .combine=cbind) %dopar% {
+               ind &lt;- sample(100, 100, replace=TRUE)
+               result1 &lt;- glm(x[ind,2]~x[ind,1], family=binomial(logit))
+               coefficients(result1)
+             }</code></pre>
+<p>The first interesting part is setting up the number of workers. Hardly-coding it is appropriate, obviously, when you know in advance how many jobs you want to distribute for your loop. In a single computer, this is all that is needed, but below I explore how to combine this with the options from SLURM to actually use as many CPUs as needed, distributed among different nodes of a cluster. But first, let’s look at the structure of <code>foreach</code>. Despite its name, which reminds of a <code>for</code> loop, <code>foreach</code> is better thought of as a parallelized version of <code>apply</code> functions. Note that, first of all, a <code>foreach</code> loop returns an object, unlike standard <code>for</code> loops. Thus, inside the loop there will be some calculations and, importantly, the returning object (in this example, <code>coefficients(result1)</code>). Each iteration of the loop generates an instance of the object returned, and an important point is that <code>foreach</code> combines the result from all these iterations through the <code>.combine</code> argument. By default, <code>foreach</code> loops return a list with as many elements as iterations. Aside from lists, one may want to append the results of each iteration as columns to a dataframe, as in this example, or as rows (<code>rbind</code>), but more complex options are also possible. For example, if you want to return two different dataframes, that are to be combined row-wise, you need to define a tailored combine function and specify that function in the
+<code>foreach</code> call:</p>
+<pre class="r"><code>comb.fun &lt;- function(...) {
+  mapply(&#39;rbind&#39;, ..., SIMPLIFY=FALSE)
+}
+
+x &lt;- iris[which(iris[,5] != &quot;setosa&quot;), c(1,5)]
+trials &lt;- 1000
+
+r &lt;- foreach(icount(trials), 
+             .combine=comb.fun) %dopar% {
+               ind &lt;- sample(100, 100, replace=TRUE)
+               result1 &lt;- glm(x[ind,2]~x[ind,1], family=binomial(logit))
+               df1 &lt;- data.frame(intercept = coefficients(result1)[1], 
+                                 slope = coefficients(result1)[2],
+                                 row.names = NULL)
+               df2 &lt;- data.frame(x = rnorm(1,0,1), y = runif(1,0,1))
+               list(df1,df2)
+             }
+
+# the object returned is a list
+head(r[[1]])</code></pre>
+<pre><code>##   intercept    slope
+## 1 -11.16593 1.754842
+## 2 -13.27785 2.161451
+## 3 -13.82873 2.187127
+## 4 -17.85178 2.896548
+## 5 -17.44293 2.800229
+## 6 -15.67598 2.462510</code></pre>
+<pre class="r"><code>head(r[[2]])</code></pre>
+<pre><code>##            x          y
+## 1 -1.9246076 0.91569969
+## 2 -0.7180156 0.43871830
+## 3 -0.6223593 0.47623232
+## 4 -0.5696176 0.08185202
+## 5 -0.6414376 0.39494386
+## 6  1.9072353 0.21394644</code></pre>
+<p>Note that in output from each iteration is packed in a list, and the combine function binds by rows each element of the list. Lastly, note also that <code>%dopar%</code> is the command that parallelizes the loop. The same loop can be run in a sequential setting, replacing <code>%dopar</code> with <code>%do%</code>.</p>
+</div>
+<div id="functions-with-built-in-parallelization" class="section level2">
+<h2>Functions with built-in parallelization</h2>
+<p>Certain packages include functions that are are internally parallelized, and thus bypass the need to use <code>foreach</code>. An interesting example is <code>brm</code>, from package <code>brms</code>. It uses the <code>parallel</code> package to create a cluster with the number of cores provided by the user, and executes the chains in parallel among this number of cores. In these cases, therefore, there is in principle no need to do nothing else aside from specifying the desired number of cores to use (and ensure that the necessary pacakges are available in the HPC cluster, of course).</p>
+</div>
+<div id="the-slurm-bash-script" class="section level2">
+<h2>the SLURM bash script</h2>
+<p>When launching parallel R scripts in a cluster, you need to call SLURM with the appropriate options depending on your needs (basically, how many CPUs you want to use). The command for launching your program through SLURM is <code>srun</code>, and the SLURM script itself is called using the <code>sbatch</code> command in the shell. This is how a basic SLURM script looks like:</p>
+<pre class="bash"><code>#!/bin/bash
+
+#------- Descripción del trabajo -------
+
+#SBATCH --job-name=&#39;TEST&#39;
+#SBATCH --comment=&#39;SLURM test&#39;
+
+#------- Avisos -------
+
+#SBATCH --mail-user=[your email]
+#SBATCH --mail-type=END,FAIL,TIME_LIMIT_80
+
+#------- Parametrización -------
+
+#SBATCH --requeue
+#SBATCH --share
+
+#SBATCH --nodes=1
+#SBATCH --tasks-per-node=1
+#SBATCH --cpus-per-task=16
+#SBATCH --partition=cn
+#SBATCH --mem=8G
+#SBATCH --time=10-0:0:0
+
+#------- Entrada/Salida -------
+
+#SBATCH --workdir=[your working directory]
+#SBATCH --output=[full path to output file]
+#SBATCH --error=[full path to error log]
+
+#------- Carga de módulos -------
+
+module load R
+
+export R_LIBS=/path.to/R/library
+
+#------- Comando -------
+srun Rscript --no-save TEST.R</code></pre>
+<p>This script launches the R script <code>TEST.R</code> with 16 cores and for a maximum of 10 days. In the script there is an option to use your local R library in case you want to use locally-installed packages, or if the server does not have a certain package installed. The output and error files will hold the messages and error outputs arising from your R script. These may be set to /dev/null, if you do not want to keep them. This script will allocate 1 * 1 * 16 CPUs, so you could specify 16 workers/cores in your R script and each would be allocated one CPU. Other options include the time allocated to the job (10 days in this example), or the RAM memory allocated.</p>
+<p>Once this shell script is stored in your server account (e.g. as <code>slurm_script.sh</code>), it can be passed to the SLURM manager:</p>
+<pre class="bash"><code>sbatch slurm_script.sh</code></pre>
+<p>This will launch your R script in the cluster. You can check the status of the jobs you have currently running with the command <code>squeue -u your_user_ID</code>.</p>
+</div>
+<div id="parallelization-through-slurm-job-arrays" class="section level2">
+<h2>Parallelization through SLURM job arrays</h2>
+<p>to do…</p>
+</div>

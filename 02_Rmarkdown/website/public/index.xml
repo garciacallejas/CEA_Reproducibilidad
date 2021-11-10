@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>David García Callejas</title>
+    <link>https://garciacallejas.github.io/</link>
+    <description>Recent content on David García Callejas</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 15 May 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://garciacallejas.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Working setup</title>
+      <link>https://garciacallejas.github.io/blog/working_setup/</link>
+      <pubDate>Thu, 04 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://garciacallejas.github.io/blog/working_setup/</guid>
+      <description>I often experiment with different workflows and adapt them to my needs and likings. I have written papers in Word, Latex, google docs, and Markdown, while I have produced and tweaked figures with R, Gimp, Inkscape, the yEd diagram editor, etc. I will quickly summarize what, for me, is the best workflow for a complete project.
+1 - Setting up a code/data project
+ Set up a github repository for the code and, if it applies, for the raw data.</description>
+    </item>
+    
+    <item>
+      <title>Parallel R with SLURM</title>
+      <link>https://garciacallejas.github.io/blog/parallelr/</link>
+      <pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://garciacallejas.github.io/blog/parallelr/</guid>
+      <description>This post is a work in progress! I will incorporate new ideas as I try them
+Types of parallelization SLURM is a workload manager for organizing computing resources in Linux clusters. In order to submit jobs to a cluster managed via SLURM, these have to be submitted via bash scripts that call the actual program to run. Focusing on R, one may think on two general types of parallelizing scripts.</description>
+    </item>
+    
+    <item>
+      <title>test1</title>
+      <link>https://garciacallejas.github.io/blog/test1/</link>
+      <pubDate>Sun, 17 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://garciacallejas.github.io/blog/test1/</guid>
+      <description>hey</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://garciacallejas.github.io/post/</link>
+      <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://garciacallejas.github.io/post/</guid>
+      <description>Research · Publications and CV · Teaching · Blog
+This is my blog page.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://garciacallejas.github.io/publications/publications/</link>
+      <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://garciacallejas.github.io/publications/publications/</guid>
+      <description>Research · Publications and CV · Teaching · Blog
+ Curriculum Vitae  Full cv: PDF  Refereed Journal Publications Please contact me if you want a copy of the publications that are behind paywalls.
+  Taheri, S., García-Callejas, D., Araújo, M.B. In press. Discriminating climate, land-cover and random effects on species range dynamics. Global Change Biology. LINK.
+  García-Callejas, D., Godoy, O., Bartomeus, I. 2020. cxr: A toolbox for modelling species coexistence in R.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://garciacallejas.github.io/research/research/</link>
+      <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://garciacallejas.github.io/research/research/</guid>
+      <description>Research · Publications and CV · Teaching · Blog
+ Structure and dynamics of ecological communities No species exists in isolation, and interactions with other living entities dictate the short and long-term fate of mostly every organism on earth. I study ecological communities because I believe that the self-organization of ecological interactions generates communities that display intrinsic characteristics and emerging properties. It is mindblowing to realize how little we know about how general are the features we observe in some communities, in terms of their topology or their dynamics.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://garciacallejas.github.io/teaching/teaching/</link>
+      <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://garciacallejas.github.io/teaching/teaching/</guid>
+      <description>Research · Publications and CV · Teaching · Blog
+ Here you can find some teaching materials for different courses and seminars I have taught over the years:
+Advanced Statistical techniques for Conservation and Biodiversity (UHU 2020/2021, in spanish)
+ Materials  Conservation Biology (UAB 2017, in spanish)
+ Seminar 1 - General ideas and trends on Conservation Biology Seminar 2 - Drivers: Climate change, habitat loss and fragmentation Seminar 3 - Invasive species (with Yolanda Melero) Seminar 4 - Land Stewardship (with Alberto Navarro)  Forest Ecology (UAB 2017, in spanish)</description>
+    </item>
+    
+  </channel>
+</rss>

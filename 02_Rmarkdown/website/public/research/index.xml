@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Researches on David García Callejas</title>
+    <link>https://garciacallejas.github.io/research/</link>
+    <description>Recent content in Researches on David García Callejas</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 15 May 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://garciacallejas.github.io/research/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title></title>
+      <link>https://garciacallejas.github.io/research/research/</link>
+      <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://garciacallejas.github.io/research/research/</guid>
+      <description>Research · Publications and CV · Teaching · Blog
+ Structure and dynamics of ecological communities No species exists in isolation, and interactions with other living entities dictate the short and long-term fate of mostly every organism on earth. I study ecological communities because I believe that the self-organization of ecological interactions generates communities that display intrinsic characteristics and emerging properties. It is mindblowing to realize how little we know about how general are the features we observe in some communities, in terms of their topology or their dynamics.</description>
+    </item>
+    
+  </channel>
+</rss>
