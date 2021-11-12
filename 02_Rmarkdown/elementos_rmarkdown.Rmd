@@ -91,7 +91,7 @@ library(tidyverse)
     Incluir en el encabezado:
     
     ```
-    fontsize:12pt
+    fontsize: 12pt
     ```
     
   + COLOR DE LA FUENTE: 
